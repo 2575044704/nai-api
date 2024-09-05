@@ -1,7 +1,22 @@
 # nai-api
 API for novelai.net
-## 导演模式
+## 首先要获取NovelAI API key：
+### 1.首先进入[Novelai官网](https://novelai.net/stories)，点击左上角中间那个齿轮标志
+![image](https://github.com/user-attachments/assets/7593250e-977b-4c29-b9f2-5c2a2211edd0)
+### 2.左侧栏找到Account，点击Get Persistent API Token：
+![image](https://github.com/user-attachments/assets/616d75e0-e769-4214-ab09-7e723997257c)
+### 3.将获得的API token复制下来
+![image](https://github.com/user-attachments/assets/84e4670c-f682-48fe-a190-7124da80de71)
+
+## 导演模式API调用：
 ```python
+
+# 调用
+api_key = "pst-AumpmK4N7A0Isd2dG5SGPVnDG8lyKR***b" #将刚刚复制下来的API Token粘贴到引号内
+image_path = "test.jpg"  # 上传的图片文件路径，如果是windows
+output_dir = "naioutput"  # 输出的图片目录，默认保存在naioutput
+
+# ------------下方代码一般不需要改-----------
 import requests
 import base64
 import os
@@ -50,10 +65,7 @@ def augment_image(api_key, image_path, output_path):
         print("哎呀出错了！错误信息：", response.status_code, response.text)
         return None
 
-# 示例调用
-api_key = "pst-AumpmK4N7A0Isd2dG5SGPVnDG8lyKR***b"
-image_path = "test.jpg"  # 上传的图片文件路径
-output_dir = "naioutput"  # 确保目录存在
+
 os.makedirs(output_dir, exist_ok=True)
 output_path = os.path.join(output_dir, "processed_image.zip")
 
