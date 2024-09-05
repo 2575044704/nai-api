@@ -8,7 +8,7 @@ API for novelai.net
 ### 3.将获得的API token复制下来
 ![image](https://github.com/user-attachments/assets/84e4670c-f682-48fe-a190-7124da80de71)
 
-## NovelAi 图像工具API调用：
+## NovelAi Director图像工具API调用：
 ```python
 
 # 调用
@@ -86,9 +86,9 @@ if result:
 > sketch=草图
 
 > colorize=上色，给草图或者轮廓图上色
-> Defry=0-5
-> Prompt有提示词
-> prompt: " eve (black cat), ", defry: 1
+> 可选Defry=0-5
+> 可选Prompt有提示词
+> 例：prompt: " eve (black cat), ", defry: 1
 
 
 > emotion=换表情，可选Neutral，Happy，Sad，Angry，Scared，Surprised，Tired，Excited，Nervous，Thinking，Confused，Shy，Disgusted，Smug，Bored，Laughing，Irritated，Aroused，Embarrassed，Worried，Love，》》Determined，Hurt，Playful，
