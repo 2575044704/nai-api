@@ -85,7 +85,7 @@ prompt: playful;;测试
 
 > declutter=删除图片气泡或文本
 
-**生成花费**
+**生成花费**：
 python代码采用自适应图片分辨率，原图越大，消耗的点数越大
 
 ## 效果图（以declutter为例）
