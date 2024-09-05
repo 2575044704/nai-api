@@ -8,7 +8,7 @@ API for novelai.net
 ### 3.将获得的API token复制下来
 ![image](https://github.com/user-attachments/assets/84e4670c-f682-48fe-a190-7124da80de71)
 
-## 导演模式API调用：
+## 导演工具API调用：
 ```python
 
 # 调用
@@ -16,7 +16,7 @@ api_key = "pst-AumpmK4N7A0Isd2dG5SGPVnDG8lyKR***b" #将刚刚复制下来的API 
 image_path = "test.jpg"  # 上传的图片文件路径，如果是windows
 output_dir = "naioutput"  # 输出的图片目录，默认保存在naioutput
 
-# ------------下方代码一般不需要改-----------
+# ------------下方代码如果不懂，一般不需要改-----------
 import requests
 import base64
 import os
