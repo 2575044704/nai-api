@@ -21,8 +21,8 @@ api_key = ""
 
 #上传数据
 req_type = "declutter"  #见底部说明
-prompt = "angry;; solo, "  # 提示词（只有上色、换表情需要。不是所有请求类型都需要）
-defry = 1 （只有上色需要，0~5）
+prompt = "angry;; solo, "  #提示词（只有上色、换表情需要。不是所有请求类型都需要）
+defry = 1 #（只有上色需要，0~5）
 
 # 上传的图片文件路径和输出目录
 image_path = "test.jpg"     # 上传的图片文件路径
