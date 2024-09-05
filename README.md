@@ -47,7 +47,7 @@ def augment_image(api_key, image_path, output_path):
         print(f"保存至 {output_path}")
         return output_path
     else:
-        print("Error:", response.status_code, response.text)
+        print("哎呀出错了！错误信息：", response.status_code, response.text)
         return None
 
 # 示例调用
