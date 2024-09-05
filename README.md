@@ -16,15 +16,19 @@ import os
 import zipfile
 from PIL import Image
 
+#↓把你复制的api key填写在引号内
+api_key = ""
+
 #上传数据
-req_type = "emotion"
-prompt = "angry;; solo, "  # 提示（不是所有请求类型都需要）
-defry = 1
+req_type = "declutter"  #见底部说明
+prompt = "angry;; solo, "  # 提示词（只有上色、换表情需要。不是所有请求类型都需要）
+defry = 1 （只有上色需要，0~5）
+
+# 上传的图片文件路径和输出目录
+image_path = "test.jpg"     # 上传的图片文件路径
+output_dir = "naioutput"    # 输出目录
 
 def augment_image(image_path, output_dir, req_type, prompt, defry):
-    # 写用户API key
-    api_key = ""
-    
     url = "https://image.novelai.net/ai/augment-image"
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -55,7 +59,6 @@ def augment_image(image_path, output_dir, req_type, prompt, defry):
         "width": width,        # 使用图片的原始宽度
         "height": height,      # 使用图片的原始高度
         "image": image_base64
-
     }
 
     # 发送请求
@@ -98,12 +101,10 @@ def augment_image(image_path, output_dir, req_type, prompt, defry):
         print("Error:", response.status_code, response.text)
         return None
 
-# 示例调用
-image_path = "test.jpg"  # 上传的图片文件路径
-output_dir = "naioutput"  # 确保目录存在
+
 os.makedirs(output_dir, exist_ok=True)
 
-# 传入不同的 req_type, prompt 和 defry 
+
 result = augment_image(image_path, output_dir, req_type, prompt, defry)
 
 if result:
@@ -125,14 +126,15 @@ if result:
 > 例：prompt: " eve (black cat), ", defry: 1
 
 
-> emotion=换表情，可选Neutral，Happy，Sad，Angry，Scared，Surprised，Tired，Excited，Nervous，Thinking，Confused，Shy，Disgusted，Smug，Bored，Laughing，Irritated，Aroused，Embarrassed，Worried，Love，》》Determined，Hurt，Playful，
-prompt: playful;;测试
+> emotion=换表情，可选Neutral，Happy，Sad，Angry，Scared，Surprised，Tired，Excited，Nervous，Thinking，Confused，Shy，Disgusted，Smug，Bored，Laughing，Irritated，Aroused，Embarrassed，Worried，Love，Determined，Hurt，Playful，
+>
+> prompt: playful;;
 > ;;是分割，前面是表情，后面是提示词
 
 > declutter=删除图片气泡或文本
 
 **生成花费**：
-python代码采用自适应图片分辨率，原图越大，消耗的点数越大
+python代码采用自适应图片分辨率，原图越大，消耗的点数越多
 
 ## 效果图（以declutter为例）
 | 原图                                            | 输出                                            |
