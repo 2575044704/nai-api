@@ -64,7 +64,9 @@ if result:
     print(f"图片保存至 {result}")
 
 ```
-**说明**
+## **说明**
+**req_type可选：**
+
 > bg-removal=去背景，会返回3张图
 
 > lineart=轮廓
