@@ -10,19 +10,21 @@ API for novelai.net
 
 ## NovelAi Director图像工具API调用：
 ```python
-
-# 调用
-api_key = "pst-AumpmK4N7A0Isd2dG5SGPVnDG8lyKR***b" #将刚刚复制下来的API Token粘贴到引号内
-image_path = "test.jpg"  # 上传的图片文件路径，如果是windows
-output_dir = "naioutput"  # 输出的图片目录，默认保存在naioutput
-
-# ------------下方代码如果不懂，一般不需要改-----------
 import requests
 import base64
 import os
+import zipfile
 from PIL import Image
 
-def augment_image(api_key, image_path, output_path):
+#上传数据
+req_type = "emotion"
+prompt = "angry;; solo, "  # 提示（不是所有请求类型都需要）
+defry = 1
+
+def augment_image(image_path, output_dir, req_type, prompt, defry):
+    # 写用户API key
+    api_key = ""
+    
     url = "https://image.novelai.net/ai/augment-image"
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -36,41 +38,73 @@ def augment_image(api_key, image_path, output_path):
         print(f"Error: 文件 {image_path} 不存在.")
         return None
 
-    with open(image_path, "rb") as image_file:
-        image_base64 = base64.b64encode(image_file.read()).decode("utf-8")
-
     # 获取图片的原始尺寸
     with Image.open(image_path) as img:
         width, height = img.size
         print(f"图片尺寸：{width}x{height}")
 
+    # 读取图片并编码为 base64
+    with open(image_path, "rb") as image_file:
+        image_base64 = base64.b64encode(image_file.read()).decode("utf-8")
+
+    # 发送数据，使用外部传入的 req_type, prompt 和 defry
     data = {
-        "req_type": "declutter",
-        "width": width,  # 使用图片的原始宽度
-        "height": height,  # 使用图片的原始高度
+        "req_type": req_type,
+        "prompt": prompt,
+        "defry": defry,
+        "width": width,        # 使用图片的原始宽度
+        "height": height,      # 使用图片的原始高度
         "image": image_base64
+
     }
 
+    # 发送请求
     response = requests.post(url, headers=headers, json=data)
 
     # 打印调试信息
     print(f"响应： {response.status_code}")
 
     if response.status_code == 200:
-        with open(output_path, "wb") as output_file:
+        # 定义 ZIP 文件输出路径，不包含多余子目录
+        zip_path = os.path.join(output_dir, "processed_image.zip")
+        
+        # 确保目标目录存在
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # 将响应内容写入 ZIP 文件
+        with open(zip_path, "wb") as output_file:
             output_file.write(response.content)
-        print(f"保存至 {output_path}")
-        return output_path
+        print(f"ZIP 文件保存至 {zip_path}")
+
+        # 自动解压缩处理后的图片到输出目录
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            for member in zip_ref.namelist():
+                filename = os.path.basename(member)
+                if filename:
+                    file_path = os.path.join(output_dir, filename)
+                    with open(file_path, 'wb') as f:
+                        f.write(zip_ref.read(member))
+                    print(f"已提取文件：{file_path}")
+
+        # 提取图片文件路径
+        extracted_images = [os.path.join(output_dir, f) for f in os.listdir(output_dir) if f.endswith(('.png', '.jpg', '.jpeg'))]
+        if extracted_images:
+            print(f"提取到的图片文件：{extracted_images}")
+        else:
+            print("未提取到图片文件.")
+        
+        return extracted_images
     else:
-        print("哎呀出错了！错误信息：", response.status_code, response.text)
+        print("Error:", response.status_code, response.text)
         return None
 
-
+# 示例调用
+image_path = "test.jpg"  # 上传的图片文件路径
+output_dir = "naioutput"  # 确保目录存在
 os.makedirs(output_dir, exist_ok=True)
-output_path = os.path.join(output_dir, "processed_image.zip")
 
-
-result = augment_image(api_key, image_path, output_path)
+# 传入不同的 req_type, prompt 和 defry 
+result = augment_image(image_path, output_dir, req_type, prompt, defry)
 
 if result:
     print(f"图片保存至 {result}")
