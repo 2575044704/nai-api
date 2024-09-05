@@ -82,3 +82,10 @@ prompt: playful;;测试
 > ;;是分割，前面是表情，后面是提示词
 
 > declutter=删除图片气泡或文本
+
+
+## 效果图（以declutter为例）
+| 原图                                            | 输出                                            |
+|-------------------------------------------------|-------------------------------------------------|
+| ![119684319_p14](https://github.com/user-attachments/assets/eb045af7-ae80-4846-b54f-a57c34950f13) | ![image_0](https://github.com/user-attachments/assets/d80cf888-188c-4c65-813a-ea765891dd02) |
+
